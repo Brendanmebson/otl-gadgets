@@ -34,7 +34,7 @@ export default function ProductDetails() {
     return (
       <Container maxWidth="xl" sx={{ py: 4 }}>
         <Grid container spacing={5}>
-          <Grid item xs={12} md={6}><Skeleton variant="rectangular" height={480} sx={{ borderRadius: 4 }} /></Grid>
+          <Grid item xs={12} md={6}><Skeleton variant="rectangular" height={480} sx={{ borderRadius: 2 }} /></Grid>
           <Grid item xs={12} md={6}>
             <Skeleton width="30%" height={24} />
             <Skeleton width="85%" height={44} sx={{ my: 1 }} />
@@ -80,7 +80,7 @@ export default function ProductDetails() {
 
       <Grid container spacing={5} sx={{ mb: 6 }}>
         <Grid item xs={12} md={6}>
-          <Box sx={{ position: 'relative', bgcolor: colors.grey[50], borderRadius: 4, aspectRatio: '1 / 1', overflow: 'hidden', mb: 2, border: `1px solid ${colors.grey[200]}` }}>
+          <Box sx={{ position: 'relative', bgcolor: colors.grey[50], borderRadius: 2, aspectRatio: '1 / 1', overflow: 'hidden', mb: 2, border: `1px solid ${colors.grey[200]}` }}>
             <Box
               component="img"
               src={images[activeImage]?.url}
@@ -201,7 +201,7 @@ export default function ProductDetails() {
               </Button>
             </Stack>
 
-            <Stack spacing={1.5} sx={{ p: 2.5, bgcolor: colors.grey[50], borderRadius: 3, border: `1px solid ${colors.grey[200]}` }}>
+            <Stack spacing={1.5} sx={{ p: 2.5, bgcolor: colors.grey[50], borderRadius: 2, border: `1px solid ${colors.grey[200]}` }}>
               <Stack direction="row" spacing={1.5} alignItems="center">
                 <Truck size={20} color={colors.red} />
                 <Box>
@@ -253,7 +253,7 @@ export default function ProductDetails() {
                   elevation={0}
                   sx={{
                     p: 2.5,
-                    borderRadius: 3,
+                    borderRadius: 2,
                     border: `1px solid ${colors.grey[200]}`,
                     bgcolor: colors.grey[50],
                     height: '100%',
@@ -275,7 +275,7 @@ export default function ProductDetails() {
           <Box sx={{ maxWidth: 840 }}>
             <Grid container spacing={4} sx={{ mb: 4 }}>
               <Grid item xs={12} md={4}>
-                <Paper elevation={0} sx={{ p: 3, borderRadius: 3, bgcolor: colors.grey[50], border: `1px solid ${colors.grey[200]}`, textAlign: 'center' }}>
+                <Paper elevation={0} sx={{ p: 3, borderRadius: 2, bgcolor: colors.grey[50], border: `1px solid ${colors.grey[200]}`, textAlign: 'center' }}>
                   <Typography variant="h2" sx={{ fontWeight: 800, color: colors.black }}>
                     {product.rating_average}
                   </Typography>
@@ -307,7 +307,7 @@ export default function ProductDetails() {
 
             <Stack spacing={2}>
               {MOCK_REVIEWS.map((rev) => (
-                <Paper key={rev.id} elevation={0} sx={{ p: 2.5, borderRadius: 3, border: `1px solid ${colors.grey[200]}` }}>
+                <Paper key={rev.id} elevation={0} sx={{ p: 2.5, borderRadius: 2, border: `1px solid ${colors.grey[200]}` }}>
                   <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
                     <Stack direction="row" spacing={1.5} alignItems="center">
                       <Avatar sx={{ bgcolor: colors.black, width: 32, height: 32, fontSize: 13, fontWeight: 700 }}>

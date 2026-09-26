@@ -40,7 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
           display: 'flex',
           flexDirection: 'column',
           borderColor: colors.grey[200],
-          borderRadius: 4,
+          borderRadius: 2,
           bgcolor: colors.white,
           transition: 'all 250ms cubic-bezier(0.16, 1, 0.3, 1)',
           transform: hovered ? 'translateY(-6px)' : 'none',

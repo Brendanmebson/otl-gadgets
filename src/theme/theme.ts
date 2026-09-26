@@ -40,13 +40,13 @@ const theme = createTheme({
     h6: { fontWeight: 600 },
     button: { fontWeight: 700, textTransform: 'none', letterSpacing: '0.01em' },
   },
-  shape: { borderRadius: 12 },
+  shape: { borderRadius: 6 },
   spacing: 8,
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 10,
+          borderRadius: 6,
           padding: '10px 22px',
           fontWeight: 700,
           transition: 'all 200ms cubic-bezier(0.16, 1, 0.3, 1)',
@@ -69,7 +69,7 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 16,
+          borderRadius: 8,
           borderColor: colors.grey[200],
           transition: 'all 250ms cubic-bezier(0.16, 1, 0.3, 1)',
         },
@@ -79,7 +79,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontWeight: 700,
-          borderRadius: 8,
+          borderRadius: 4,
         },
       },
     },

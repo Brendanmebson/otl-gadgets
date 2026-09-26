@@ -92,7 +92,7 @@ export default function Checkout() {
   if (paymentState === 'success') {
     return (
       <Container maxWidth="sm" sx={{ py: 10, textAlign: 'center' }}>
-        <Paper elevation={0} sx={{ p: 5, borderRadius: 5, border: `1px solid ${colors.grey[200]}`, bgcolor: colors.white }}>
+        <Paper elevation={0} sx={{ p: 5, borderRadius: 2, border: `1px solid ${colors.grey[200]}`, bgcolor: colors.white }}>
           <Box sx={{ width: 64, height: 64, borderRadius: '50%', bgcolor: colors.redGlow, color: colors.red, display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2.5 }}>
             <CheckCircle2 size={36} />
           </Box>
@@ -124,7 +124,7 @@ export default function Checkout() {
       </Typography>
 
       {paymentState === 'failed' && (
-        <Alert severity="error" sx={{ mb: 3, borderRadius: 3 }}>
+        <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
           Payment processing could not be completed. Please verify your details or select another payment option.
         </Alert>
       )}
@@ -133,7 +133,7 @@ export default function Checkout() {
         <Grid container spacing={4}>
           <Grid item xs={12} md={7}>
             <Stack spacing={4}>
-              <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 4 }}>
+              <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 2 }}>
                 <Typography variant="h6" sx={{ fontWeight: 800, mb: 2.5 }}>1. Customer Details</Typography>
                 <Stack spacing={2.5}>
                   <TextField label="Full Name *" fullWidth {...register('full_name')} error={!!errors.full_name} helperText={errors.full_name?.message} />
@@ -144,7 +144,7 @@ export default function Checkout() {
                 </Stack>
               </Paper>
 
-              <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 4 }}>
+              <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 2 }}>
                 <Typography variant="h6" sx={{ fontWeight: 800, mb: 2.5 }}>2. Nationwide Shipping Address</Typography>
                 <Stack spacing={2.5}>
                   <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -157,7 +157,7 @@ export default function Checkout() {
                 </Stack>
               </Paper>
 
-              <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 4 }}>
+              <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 2 }}>
                 <Typography variant="h6" sx={{ fontWeight: 800, mb: 2 }}>3. Select Payment Method</Typography>
                 <RadioGroup value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as any)}>
                   <Stack spacing={1.5}>
@@ -166,7 +166,7 @@ export default function Checkout() {
                       onClick={() => setPaymentMethod('paystack')}
                       sx={{
                         p: 2,
-                        borderRadius: 3,
+                        borderRadius: 2,
                         border: `1.5px solid ${paymentMethod === 'paystack' ? colors.red : colors.grey[200]}`,
                         bgcolor: paymentMethod === 'paystack' ? 'rgba(227, 28, 37, 0.03)' : colors.white,
                         cursor: 'pointer',
@@ -192,7 +192,7 @@ export default function Checkout() {
                       onClick={() => setPaymentMethod('pod')}
                       sx={{
                         p: 2,
-                        borderRadius: 3,
+                        borderRadius: 2,
                         border: `1.5px solid ${paymentMethod === 'pod' ? colors.red : colors.grey[200]}`,
                         bgcolor: paymentMethod === 'pod' ? 'rgba(227, 28, 37, 0.03)' : colors.white,
                         cursor: 'pointer',
@@ -218,7 +218,7 @@ export default function Checkout() {
                       onClick={() => setPaymentMethod('transfer')}
                       sx={{
                         p: 2,
-                        borderRadius: 3,
+                        borderRadius: 2,
                         border: `1.5px solid ${paymentMethod === 'transfer' ? colors.red : colors.grey[200]}`,
                         bgcolor: paymentMethod === 'transfer' ? 'rgba(227, 28, 37, 0.03)' : colors.white,
                         cursor: 'pointer',
@@ -245,7 +245,7 @@ export default function Checkout() {
           </Grid>
 
           <Grid item xs={12} md={5}>
-            <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 4, position: 'sticky', top: 90 }}>
+            <Paper elevation={0} sx={{ p: 3.5, border: `1px solid ${colors.grey[200]}`, borderRadius: 2, position: 'sticky', top: 90 }}>
               <Typography variant="h6" sx={{ fontWeight: 800, mb: 2.5 }}>YOUR ORDER SUMMARY</Typography>
 
               <Stack spacing={2} sx={{ mb: 3 }}>

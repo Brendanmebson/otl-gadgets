@@ -122,7 +122,7 @@ export default function Hero() {
                   maxWidth: '100%',
                   objectFit: 'contain',
                   filter: 'drop-shadow(0 24px 36px rgba(8, 8, 8, 0.20))',
-                  borderRadius: 4,
+                  borderRadius: 2,
                   transition: 'transform 300ms cubic-bezier(0.16, 1, 0.3, 1)',
                   '&:hover': { transform: 'scale(1.03) translateY(-4px)' },
                 }}
@@ -136,7 +136,7 @@ export default function Hero() {
                   bgcolor: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(12px)',
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 2,
                   boxShadow: '0 12px 28px rgba(8,8,8,0.12)',
                   border: `1px solid ${colors.grey[200]}`,
                   display: 'flex',

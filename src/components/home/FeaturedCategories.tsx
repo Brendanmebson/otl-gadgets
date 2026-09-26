@@ -41,7 +41,7 @@ export default function FeaturedCategories() {
         {isLoading
           ? Array.from({ length: 4 }).map((_, idx) => (
               <Grid item xs={12} sm={6} md={idx === 0 ? 6 : 3} key={idx}>
-                <Skeleton variant="rectangular" height={220} sx={{ borderRadius: 3 }} />
+                <Skeleton variant="rectangular" height={220} sx={{ borderRadius: 2 }} />
               </Grid>
             ))
           : (categories ?? []).slice(0, 4).map((cat, idx) => {
@@ -55,7 +55,7 @@ export default function FeaturedCategories() {
                       display: 'block',
                       textDecoration: 'none',
                       position: 'relative',
-                      borderRadius: 4,
+                      borderRadius: 2,
                       overflow: 'hidden',
                       height: 230,
                       bgcolor: colors.grey[800],
@@ -100,7 +100,7 @@ export default function FeaturedCategories() {
                             color: colors.white,
                             px: 1.5,
                             py: 0.5,
-                            borderRadius: 2,
+                            borderRadius: 1.5,
                             fontSize: 12,
                             fontWeight: 700,
                           }}

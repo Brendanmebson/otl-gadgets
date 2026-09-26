@@ -55,7 +55,7 @@ export default function Cart() {
         sx={{
           p: 2.5,
           mb: 4,
-          borderRadius: 3.5,
+          borderRadius: 2,
           bgcolor: isFreeShipping ? 'rgba(227, 28, 37, 0.06)' : colors.grey[50],
           border: `1.5px dashed ${isFreeShipping ? colors.red : colors.grey[300]}`,
         }}
@@ -86,7 +86,7 @@ export default function Cart() {
                 sx={{
                   p: 2.5,
                   border: `1px solid ${colors.grey[200]}`,
-                  borderRadius: 3.5,
+                  borderRadius: 2,
                   display: 'flex',
                   alignItems: 'center',
                   gap: 2,
@@ -95,7 +95,7 @@ export default function Cart() {
                 <Box
                   component={Link}
                   to={`/product/${product.slug}`}
-                  sx={{ width: 90, height: 90, bgcolor: colors.grey[50], borderRadius: 2.5, flexShrink: 0, overflow: 'hidden' }}
+                  sx={{ width: 90, height: 90, bgcolor: colors.grey[50], borderRadius: 1.5, flexShrink: 0, overflow: 'hidden' }}
                 >
                   <Box component="img" src={product.images?.[0]?.url} alt={product.name} sx={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </Box>
@@ -126,7 +126,7 @@ export default function Cart() {
           </Stack>
 
           {/* Promo code bar */}
-          <Paper elevation={0} sx={{ mt: 3, p: 2, border: `1px solid ${colors.grey[200]}`, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ mt: 3, p: 2, border: `1px solid ${colors.grey[200]}`, borderRadius: 2 }}>
             <Box component="form" onSubmit={handleApplyPromo} sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
               <Tag size={18} color={colors.grey[500]} />
               <InputBase
@@ -151,7 +151,7 @@ export default function Cart() {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Paper elevation={0} sx={{ p: 3, border: `1px solid ${colors.grey[200]}`, borderRadius: 4, position: 'sticky', top: 90 }}>
+          <Paper elevation={0} sx={{ p: 3, border: `1px solid ${colors.grey[200]}`, borderRadius: 2, position: 'sticky', top: 90 }}>
             <Typography variant="h6" sx={{ fontWeight: 800, mb: 2.5 }}>ORDER SUMMARY</Typography>
             <Stack spacing={1.5}>
               <Stack direction="row" justifyContent="space-between">

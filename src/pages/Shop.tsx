@@ -40,7 +40,7 @@ function FiltersPanel({
       elevation={0}
       sx={{
         p: 3,
-        borderRadius: 4,
+        borderRadius: 2,
         border: `1px solid ${colors.grey[200]}`,
         bgcolor: colors.white,
         position: 'sticky',

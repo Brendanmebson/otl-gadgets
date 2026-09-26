@@ -38,7 +38,7 @@ export default function QuickViewModal({ product, open, onClose }: QuickViewModa
       maxWidth="md"
       PaperProps={{
         sx: {
-          borderRadius: 4,
+          borderRadius: 2,
           overflow: 'hidden',
           p: 0,
         },
@@ -54,7 +54,7 @@ export default function QuickViewModal({ product, open, onClose }: QuickViewModa
 
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
-            <Box sx={{ bgcolor: colors.grey[50], borderRadius: 3, aspectRatio: '1 / 1', overflow: 'hidden', mb: 1.5 }}>
+            <Box sx={{ bgcolor: colors.grey[50], borderRadius: 2, aspectRatio: '1 / 1', overflow: 'hidden', mb: 1.5 }}>
               <Box
                 component="img"
                 src={images[activeImg]?.url}
@@ -71,7 +71,7 @@ export default function QuickViewModal({ product, open, onClose }: QuickViewModa
                     src={img.url}
                     onClick={() => setActiveImg(idx)}
                     sx={{
-                      width: 54, height: 54, objectFit: 'cover', borderRadius: 2, cursor: 'pointer',
+                      width: 54, height: 54, objectFit: 'cover', borderRadius: 1, cursor: 'pointer',
                       border: idx === activeImg ? `2px solid ${colors.red}` : `1px solid ${colors.grey[200]}`,
                     }}
                   />
@@ -155,7 +155,7 @@ export default function QuickViewModal({ product, open, onClose }: QuickViewModa
                 </IconButton>
               </Stack>
 
-              <Stack direction="row" spacing={1} alignItems="center" sx={{ p: 1.5, bgcolor: colors.grey[50], borderRadius: 2 }}>
+              <Stack direction="row" spacing={1} alignItems="center" sx={{ p: 1.5, bgcolor: colors.grey[50], borderRadius: 1.5 }}>
                 <Truck size={18} color={colors.grey[500]} />
                 <Typography variant="caption" sx={{ fontWeight: 600, color: colors.grey[600] }}>
                   Express 24-48h Delivery in Nigeria • Pay on Delivery available
