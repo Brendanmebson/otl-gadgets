@@ -18,22 +18,7 @@ export default function Hero() {
       <Container maxWidth="lg">
         <Grid container alignItems="center" spacing={4} sx={{ minHeight: { xs: 'auto', md: 540 } }}>
           <Grid item xs={12} md={6}>
-            <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-              <Chip
-                icon={<Zap size={14} color={colors.red} />}
-                label="NATIONWIDE 24-48H DISPATCH"
-                size="small"
-                sx={{
-                  bgcolor: 'rgba(227, 28, 37, 0.08)',
-                  color: colors.red,
-                  fontWeight: 800,
-                  fontSize: 11,
-                  letterSpacing: '0.05em',
-                  borderRadius: 2,
-                  px: 0.5,
-                }}
-              />
-            </Stack>
+
 
             <Typography
               variant="h1"

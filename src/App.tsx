@@ -11,9 +11,13 @@ import AdminProducts from '@/pages/admin/AdminProducts'
 import AdminOrders from '@/pages/admin/AdminOrders'
 import AdminInventory from '@/pages/admin/AdminInventory'
 
+import ScrollToTop from '@/components/common/ScrollToTop'
+
 export default function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       {/* Admin routes render their own AdminLayout (sidebar), no storefront chrome */}
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/products" element={<AdminProducts />} />
@@ -38,5 +42,6 @@ export default function App() {
         }
       />
     </Routes>
+    </>
   )
 }
