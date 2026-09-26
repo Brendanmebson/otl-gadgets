@@ -91,7 +91,7 @@ export default function Checkout() {
 
   if (paymentState === 'success') {
     return (
-      <Container maxWidth="sm" sx={{ py: 10, textAlign: 'center' }}>
+      <Container maxWidth="sm" sx={{ py: { xs: 5, sm: 10 }, textAlign: 'center', px: { xs: 2, sm: 3 } }}>
         <Paper elevation={0} sx={{ p: 5, borderRadius: 2, border: `1px solid ${colors.grey[200]}`, bgcolor: colors.white }}>
           <Box sx={{ width: 64, height: 64, borderRadius: '50%', bgcolor: colors.redGlow, color: colors.red, display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2.5 }}>
             <CheckCircle2 size={36} />
@@ -118,7 +118,7 @@ export default function Checkout() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h3" sx={{ fontWeight: 800, mb: 4, color: colors.black }}>
         CHECKOUT & DELIVERY
       </Typography>
@@ -176,7 +176,7 @@ export default function Checkout() {
                         value="paystack"
                         control={<Radio color="secondary" />}
                         label={
-                          <Stack direction="row" spacing={1.5} alignItems="center">
+                          <Stack direction="row" spacing={1.5} alignItems="center" flexWrap="wrap">
                             <CreditCard size={20} color={colors.red} />
                             <Box>
                               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>Paystack (Debit Card, USSD, Transfer)</Typography>
@@ -202,7 +202,7 @@ export default function Checkout() {
                         value="pod"
                         control={<Radio color="secondary" />}
                         label={
-                          <Stack direction="row" spacing={1.5} alignItems="center">
+                          <Stack direction="row" spacing={1.5} alignItems="center" flexWrap="wrap">
                             <Banknote size={20} color={colors.red} />
                             <Box>
                               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>Pay on Delivery (POS / Cash)</Typography>
@@ -228,7 +228,7 @@ export default function Checkout() {
                         value="transfer"
                         control={<Radio color="secondary" />}
                         label={
-                          <Stack direction="row" spacing={1.5} alignItems="center">
+                          <Stack direction="row" spacing={1.5} alignItems="center" flexWrap="wrap">
                             <Building2 size={20} color={colors.red} />
                             <Box>
                               <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>Direct Bank Transfer</Typography>

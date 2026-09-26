@@ -15,7 +15,7 @@ function getTimeLeft(target: number) {
 
 function TimeBox({ value, label }: { value: number; label: string }) {
   return (
-    <Box sx={{ textAlign: 'center', minWidth: 64 }}>
+    <Box sx={{ textAlign: 'center', minWidth: { xs: 52, sm: 64 } }}>
       <Box
         sx={{
           bgcolor: 'rgba(255, 255, 255, 0.08)',
@@ -25,7 +25,7 @@ function TimeBox({ value, label }: { value: number; label: string }) {
           backdropFilter: 'blur(8px)',
         }}
       >
-        <Typography variant="h4" sx={{ color: colors.white, fontWeight: 800, fontFamily: 'monospace' }}>
+        <Typography variant="h4" sx={{ color: colors.white, fontWeight: 800, fontFamily: 'monospace', fontSize: { xs: 24, sm: 34 } }}>
           {String(value).padStart(2, '0')}
         </Typography>
       </Box>
@@ -55,7 +55,7 @@ export default function CountdownDeals({ endsAt }: { endsAt?: Date }) {
         background: `radial-gradient(circle at 10% 50%, rgba(227, 28, 37, 0.18) 0%, transparent 60%), ${colors.black}`,
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Grid container alignItems="center" spacing={4}>
           <Grid item xs={12} md={7}>
             <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 2 }}>

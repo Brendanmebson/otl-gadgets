@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Dialog, Box, Grid, Typography, Stack, Rating, Button, Chip, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material'
+import { Dialog, Box, Grid, Typography, Stack, Rating, Button, Chip, IconButton, Table, TableBody, TableRow, TableCell, useMediaQuery, useTheme } from '@mui/material'
 import { X, ShoppingCart, Heart, Truck, Check } from 'lucide-react'
 import { colors } from '@/theme/theme'
 import { formatNaira, discountPercent } from '@/lib/format'
@@ -17,6 +17,8 @@ export default function QuickViewModal({ product, open, onClose }: QuickViewModa
   const [wishlisted, setWishlisted] = useState(false)
   const [added, setAdded] = useState(false)
   const { addToCart } = useCart()
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   if (!product) return null
 
@@ -35,10 +37,11 @@ export default function QuickViewModal({ product, open, onClose }: QuickViewModa
       open={open}
       onClose={onClose}
       fullWidth
+      fullScreen={fullScreen}
       maxWidth="md"
       PaperProps={{
         sx: {
-          borderRadius: 2,
+          borderRadius: fullScreen ? 0 : 2,
           overflow: 'hidden',
           p: 0,
         },

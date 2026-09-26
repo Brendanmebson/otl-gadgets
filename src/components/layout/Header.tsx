@@ -35,7 +35,7 @@ export default function Header() {
           transition: 'all 200ms ease',
         }}
       >
-        <Container maxWidth="xl" disableGutters>
+        <Container maxWidth="lg">
           <Toolbar sx={{ minHeight: { xs: 60, md: 68 }, gap: 2.5, px: { xs: 2, md: 3 } }}>
             <IconButton
               sx={{ display: { xs: 'inline-flex', md: 'none' }, color: colors.white }}

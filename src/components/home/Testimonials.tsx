@@ -9,7 +9,7 @@ const TESTIMONIALS = [
 
 export default function Testimonials() {
   return (
-    <Container maxWidth="xl" sx={{ py: 6 }}>
+    <Container maxWidth="lg" sx={{ py: 6 }}>
       <Typography variant="overline" sx={{ color: colors.red, fontWeight: 700 }}>TESTIMONIAL</Typography>
       <Typography variant="h4" sx={{ mb: 4 }}>TRUSTWORTHY NIGERIAN SERVICE</Typography>
       <Grid container spacing={3}>

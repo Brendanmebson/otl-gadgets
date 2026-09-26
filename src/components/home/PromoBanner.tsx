@@ -4,7 +4,7 @@ import { colors } from '@/theme/theme'
 
 export default function PromoBanner() {
   return (
-    <Container maxWidth="xl" sx={{ py: 2 }}>
+    <Container maxWidth="lg" sx={{ py: 2 }}>
       <Box sx={{ bgcolor: colors.black, borderRadius: 3, overflow: 'hidden' }}>
         <Grid container alignItems="center">
           <Grid item xs={12} md={7} sx={{ p: { xs: 4, md: 6 } }}>

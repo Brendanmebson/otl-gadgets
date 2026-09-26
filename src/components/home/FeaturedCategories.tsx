@@ -8,7 +8,7 @@ export default function FeaturedCategories() {
   const { data: categories, isLoading } = useCategories()
 
   return (
-    <Container maxWidth="xl" sx={{ py: 6 }}>
+    <Container maxWidth="lg" sx={{ py: 6 }}>
       <Stack direction="row" justifyContent="space-between" alignItems="flex-end" sx={{ mb: 4 }}>
         <Box>
           <Typography variant="caption" sx={{ color: colors.red, fontWeight: 800, letterSpacing: '0.08em' }}>

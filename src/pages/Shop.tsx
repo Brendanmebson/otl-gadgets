@@ -4,7 +4,7 @@ import {
   Container, Grid, Box, Typography, Stack, Select, MenuItem, Drawer, Button,
   FormGroup, FormControlLabel, Checkbox, Slider, Divider, Pagination, IconButton, Chip, Paper,
 } from '@mui/material'
-import { SlidersHorizontal, X, Grid2X2, Grid3X3, LayoutGrid, RotateCcw } from 'lucide-react'
+import { SlidersHorizontal, X, Grid3X3, LayoutGrid, RotateCcw, Filter, Tag, CheckCircle2, Sparkles } from 'lucide-react'
 import { colors } from '@/theme/theme'
 import Breadcrumbs from '@/components/common/Breadcrumbs'
 import EmptyState from '@/components/common/EmptyState'
@@ -20,8 +20,15 @@ const QUICK_TAGS = [
   { label: 'All Gadgets', category: undefined },
   { label: 'Phones & Tablets', category: 'phones-tablets' },
   { label: 'Laptops', category: 'laptops-computing' },
-  { label: 'Audio', category: 'audio-gaming' },
+  { label: 'Audio & Gaming', category: 'audio-gaming' },
   { label: 'Accessories', category: 'accessories' },
+]
+
+const PRICE_PRESETS = [
+  { label: 'All Prices', min: 0, max: 2000000 },
+  { label: 'Under ₦100k', min: 0, max: 100000 },
+  { label: '₦100k - ₦500k', min: 100000, max: 500000 },
+  { label: '₦500k+', min: 500000, max: 2000000 },
 ]
 
 function FiltersPanel({
@@ -33,30 +40,32 @@ function FiltersPanel({
   onChange: (next: Partial<ProductFilters>) => void
   onReset: () => void
 }) {
-  const activeCount = (filters.categorySlug ? 1 : 0) + (filters.brandIds?.length ?? 0) + (filters.inStockOnly ? 1 : 0) + (filters.onSaleOnly ? 1 : 0)
+  const activeCount = (filters.categorySlug ? 1 : 0) + (filters.brandIds?.length ?? 0) + (filters.inStockOnly ? 1 : 0) + (filters.onSaleOnly ? 1 : 0) + (filters.priceMin || filters.priceMax !== 2000000 ? 1 : 0)
 
   return (
     <Paper
       elevation={0}
       sx={{
         p: 3,
-        borderRadius: 2,
-        border: `1px solid ${colors.grey[200]}`,
+        borderRadius: 3,
+        border: `1px solid rgba(8, 8, 8, 0.08)`,
         bgcolor: colors.white,
         position: 'sticky',
         top: 90,
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
       }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2.5 }}>
         <Stack direction="row" spacing={1} alignItems="center">
-          <Typography variant="subtitle1" sx={{ fontWeight: 800, color: colors.black }}>
-            Filters
+          <Filter size={18} color={colors.red} />
+          <Typography variant="subtitle1" sx={{ fontWeight: 800, color: colors.black, letterSpacing: '-0.01em' }}>
+            Filter Catalogue
           </Typography>
           {activeCount > 0 && (
             <Chip
               label={activeCount}
               size="small"
-              sx={{ bgcolor: colors.red, color: colors.white, fontWeight: 800, height: 20 }}
+              sx={{ bgcolor: colors.red, color: colors.white, fontWeight: 800, height: 20, fontSize: 11 }}
             />
           )}
         </Stack>
@@ -64,8 +73,8 @@ function FiltersPanel({
           <Button
             size="small"
             onClick={onReset}
-            startIcon={<RotateCcw size={14} />}
-            sx={{ color: colors.grey[500], fontSize: 12, p: 0 }}
+            startIcon={<RotateCcw size={13} />}
+            sx={{ color: colors.grey[600], fontSize: 12, fontWeight: 700, p: 0, '&:hover': { color: colors.red } }}
           >
             Reset
           </Button>
@@ -73,61 +82,105 @@ function FiltersPanel({
       </Stack>
 
       <Stack spacing={3}>
+        {/* Categories */}
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.05em', mb: 1, display: 'block' }}>
+          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.06em', mb: 1.5, display: 'block' }}>
             CATEGORIES
           </Typography>
           <FormGroup>
-            {categories.map((c) => (
-              <FormControlLabel
-                key={c.slug}
-                control={
-                  <Checkbox
-                    size="small"
-                    checked={filters.categorySlug === c.slug}
-                    onChange={(e) => onChange({ categorySlug: e.target.checked ? c.slug : undefined })}
-                  />
-                }
-                label={<Typography variant="body2" sx={{ fontWeight: filters.categorySlug === c.slug ? 700 : 500 }}>{c.name}</Typography>}
-              />
-            ))}
+            {categories.map((c) => {
+              const isChecked = filters.categorySlug === c.slug
+              return (
+                <FormControlLabel
+                  key={c.slug}
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={isChecked}
+                      onChange={(e) => onChange({ categorySlug: e.target.checked ? c.slug : undefined })}
+                      sx={{ color: colors.grey[300], '&.Mui-checked': { color: colors.red } }}
+                    />
+                  }
+                  label={
+                    <Typography variant="body2" sx={{ fontWeight: isChecked ? 700 : 500, color: isChecked ? colors.black : colors.grey[700] }}>
+                      {c.name}
+                    </Typography>
+                  }
+                />
+              )
+            })}
           </FormGroup>
         </Box>
 
         <Divider sx={{ borderColor: colors.grey[100] }} />
 
+        {/* Brands */}
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.05em', mb: 1, display: 'block' }}>
+          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.06em', mb: 1.5, display: 'block' }}>
             BRANDS
           </Typography>
           <FormGroup>
-            {brands.map((b) => (
-              <FormControlLabel
-                key={b.id}
-                control={
-                  <Checkbox
-                    size="small"
-                    checked={filters.brandIds?.includes(b.id) ?? false}
-                    onChange={(e) => {
-                      const current = filters.brandIds ?? []
-                      onChange({
-                        brandIds: e.target.checked ? [...current, b.id] : current.filter((id) => id !== b.id),
-                      })
-                    }}
-                  />
-                }
-                label={<Typography variant="body2" sx={{ fontWeight: filters.brandIds?.includes(b.id) ? 700 : 500 }}>{b.name}</Typography>}
-              />
-            ))}
+            {brands.map((b) => {
+              const isChecked = filters.brandIds?.includes(b.id) ?? false
+              return (
+                <FormControlLabel
+                  key={b.id}
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={isChecked}
+                      onChange={(e) => {
+                        const current = filters.brandIds ?? []
+                        onChange({
+                          brandIds: e.target.checked ? [...current, b.id] : current.filter((id) => id !== b.id),
+                        })
+                      }}
+                      sx={{ color: colors.grey[300], '&.Mui-checked': { color: colors.red } }}
+                    />
+                  }
+                  label={
+                    <Typography variant="body2" sx={{ fontWeight: isChecked ? 700 : 500, color: isChecked ? colors.black : colors.grey[700] }}>
+                      {b.name}
+                    </Typography>
+                  }
+                />
+              )
+            })}
           </FormGroup>
         </Box>
 
         <Divider sx={{ borderColor: colors.grey[100] }} />
 
+        {/* Price Presets & Slider */}
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.05em', mb: 1.5, display: 'block' }}>
+          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.06em', mb: 1.5, display: 'block' }}>
             PRICE RANGE (₦)
           </Typography>
+
+          {/* Preset Buttons */}
+          <Stack direction="row" flexWrap="wrap" gap={0.75} sx={{ mb: 2 }}>
+            {PRICE_PRESETS.map((preset) => {
+              const isSelected = filters.priceMin === preset.min && filters.priceMax === preset.max
+              return (
+                <Chip
+                  key={preset.label}
+                  label={preset.label}
+                  size="small"
+                  onClick={() => onChange({ priceMin: preset.min, priceMax: preset.max })}
+                  sx={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    bgcolor: isSelected ? colors.black : colors.grey[100],
+                    color: isSelected ? colors.white : colors.grey[700],
+                    border: `1px solid ${isSelected ? colors.black : 'transparent'}`,
+                    cursor: 'pointer',
+                    '&:hover': { bgcolor: isSelected ? colors.black : colors.grey[200] },
+                  }}
+                />
+              )
+            })}
+          </Stack>
+
           <Slider
             value={[filters.priceMin ?? 0, filters.priceMax ?? 2000000]}
             min={0}
@@ -137,13 +190,20 @@ function FiltersPanel({
               const [min, max] = val as number[]
               onChange({ priceMin: min, priceMax: max })
             }}
-            color="secondary"
+            sx={{
+              color: colors.red,
+              '& .MuiSlider-thumb': {
+                width: 18,
+                height: 18,
+                boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+              },
+            }}
           />
           <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
-            <Typography variant="caption" sx={{ fontWeight: 700, color: colors.grey[600] }}>
+            <Typography variant="caption" sx={{ fontWeight: 700, color: colors.grey[700] }}>
               {formatNaira(filters.priceMin ?? 0)}
             </Typography>
-            <Typography variant="caption" sx={{ fontWeight: 700, color: colors.grey[600] }}>
+            <Typography variant="caption" sx={{ fontWeight: 700, color: colors.grey[700] }}>
               {formatNaira(filters.priceMax ?? 2000000)}
             </Typography>
           </Stack>
@@ -151,8 +211,9 @@ function FiltersPanel({
 
         <Divider sx={{ borderColor: colors.grey[100] }} />
 
+        {/* Availability & Offers */}
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.05em', mb: 1, display: 'block' }}>
+          <Typography variant="caption" sx={{ fontWeight: 800, color: colors.grey[400], letterSpacing: '0.06em', mb: 1.5, display: 'block' }}>
             AVAILABILITY & OFFERS
           </Typography>
           <FormGroup>
@@ -162,9 +223,10 @@ function FiltersPanel({
                   size="small"
                   checked={filters.inStockOnly ?? false}
                   onChange={(e) => onChange({ inStockOnly: e.target.checked })}
+                  sx={{ color: colors.grey[300], '&.Mui-checked': { color: colors.red } }}
                 />
               }
-              label={<Typography variant="body2">In stock only</Typography>}
+              label={<Typography variant="body2" sx={{ fontWeight: 500 }}>In stock only</Typography>}
             />
             <FormControlLabel
               control={
@@ -172,9 +234,14 @@ function FiltersPanel({
                   size="small"
                   checked={filters.onSaleOnly ?? false}
                   onChange={(e) => onChange({ onSaleOnly: e.target.checked })}
+                  sx={{ color: colors.grey[300], '&.Mui-checked': { color: colors.red } }}
                 />
               }
-              label={<Typography variant="body2" sx={{ color: colors.red, fontWeight: 700 }}>On sale / Flash Deals</Typography>}
+              label={
+                <Typography variant="body2" sx={{ color: colors.red, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Sparkles size={14} /> On sale / Deals
+                </Typography>
+              }
             />
           </FormGroup>
         </Box>
@@ -237,19 +304,40 @@ export default function Shop() {
   )
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Shop Catalogue' }]} />
+    <Container maxWidth="lg" sx={{ py: { xs: 3, md: 5 } }}>
+      <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Tech Catalogue' }]} />
 
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h3" sx={{ fontWeight: 800, color: colors.black, mb: 1 }}>
-          EXPLORE GADGETS
-        </Typography>
-        <Typography variant="body1" sx={{ color: colors.grey[500] }}>
-          Browse authentic tech gadgets in Nigeria with official warranty and flexible delivery.
-        </Typography>
+      {/* Catalogue Header Hero Banner */}
+      <Box
+        sx={{
+          mb: 4,
+          p: { xs: 3, md: 4 },
+          borderRadius: 3,
+          bgcolor: colors.black,
+          color: colors.white,
+          position: 'relative',
+          overflow: 'hidden',
+          background: `radial-gradient(circle at 90% 10%, rgba(227, 28, 37, 0.25) 0%, transparent 60%), ${colors.black}`,
+          boxShadow: '0 12px 32px rgba(0,0,0,0.15)',
+        }}
+      >
+        <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', md: 'center' }} spacing={2}>
+          <Box>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+              <Chip label="AUTHENTIC NIGERIAN STOCK" size="small" sx={{ bgcolor: colors.red, color: colors.white, fontWeight: 800, fontSize: 11 }} />
+              <Typography variant="caption" sx={{ color: colors.grey[400], fontWeight: 600 }}>Official Warranty Included</Typography>
+            </Stack>
+            <Typography variant="h3" sx={{ fontWeight: 900, color: colors.white, letterSpacing: '-0.02em', fontSize: { xs: 26, sm: 34, md: 40 } }}>
+              TECH CATALOGUE
+            </Typography>
+            <Typography variant="body2" sx={{ color: colors.grey[300], mt: 0.5, maxWidth: 540 }}>
+              Browse flagship smartphones, laptops, audio gear & luxury tech accessories with nationwide fast delivery.
+            </Typography>
+          </Box>
+        </Stack>
       </Box>
 
-      {/* Quick Tag Pills */}
+      {/* Quick Tag Filter Pills */}
       <Stack direction="row" spacing={1} flexWrap="wrap" gap={1} sx={{ mb: 4 }}>
         {QUICK_TAGS.map((tag) => {
           const isSelected = filters.categorySlug === tag.category
@@ -259,84 +347,104 @@ export default function Shop() {
               label={tag.label}
               onClick={() => updateFilters({ categorySlug: tag.category })}
               clickable
-              color={isSelected ? 'secondary' : 'default'}
-              variant={isSelected ? 'filled' : 'outlined'}
               sx={{
-                fontWeight: 700,
+                fontWeight: isSelected ? 800 : 600,
                 borderRadius: 2.5,
-                px: 1,
-                py: 2,
+                px: 1.5,
+                py: 2.2,
                 fontSize: 13,
+                bgcolor: isSelected ? colors.black : colors.white,
+                color: isSelected ? colors.white : colors.grey[800],
+                border: `1px solid ${isSelected ? colors.black : colors.grey[200]}`,
+                boxShadow: isSelected ? '0 4px 12px rgba(0,0,0,0.12)' : 'none',
+                transition: 'all 200ms ease',
+                '&:hover': {
+                  bgcolor: isSelected ? colors.black : colors.grey[100],
+                  borderColor: colors.black,
+                },
               }}
             />
           )
         })}
       </Stack>
 
-      <Grid container spacing={4}>
+      {/* Main Grid: Sidebar + Product Grid */}
+      <Grid container spacing={3.5}>
         <Grid item md={3} sx={{ display: { xs: 'none', md: 'block' } }}>
           {filterPanel}
         </Grid>
 
         <Grid item xs={12} md={9}>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            justifyContent="space-between"
-            alignItems={{ xs: 'flex-start', sm: 'center' }}
-            spacing={2}
+          {/* Toolbar: Counter, Mobile Filter Trigger, Column Mode, Sort */}
+          <Paper
+            elevation={0}
             sx={{
+              p: 2,
               mb: 3,
-              pb: 2,
-              borderBottom: `1px solid ${colors.grey[200]}`,
+              borderRadius: 2.5,
+              border: `1px solid ${colors.grey[200]}`,
+              bgcolor: colors.white,
             }}
           >
-            <Typography variant="body2" sx={{ color: colors.grey[600], fontWeight: 600 }}>
-              Showing {isLoading ? '…' : data?.items.length ?? 0} of {data?.total ?? 0} Products
-            </Typography>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              justifyContent="space-between"
+              alignItems={{ xs: 'flex-start', sm: 'center' }}
+              spacing={2}
+            >
+              <Typography variant="body2" sx={{ color: colors.grey[700], fontWeight: 700 }}>
+                Showing <Box component="span" sx={{ color: colors.red }}>{isLoading ? '…' : data?.items.length ?? 0}</Box> of {data?.total ?? 0} Products
+              </Typography>
 
-            <Stack direction="row" spacing={1.5} alignItems="center" width={{ xs: '100%', sm: 'auto' }} justifyContent="space-between">
-              <IconButton
-                sx={{ display: { xs: 'inline-flex', md: 'none' }, border: `1px solid ${colors.grey[300]}`, borderRadius: 2 }}
-                onClick={() => setMobileFiltersOpen(true)}
-                aria-label="Open filters"
-              >
-                <SlidersHorizontal size={18} />
-              </IconButton>
+              <Stack direction="row" spacing={1.5} alignItems="center" width={{ xs: '100%', sm: 'auto' }} justifyContent="space-between">
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<SlidersHorizontal size={16} />}
+                  sx={{ display: { xs: 'inline-flex', md: 'none' }, borderRadius: 2, borderColor: colors.grey[300], color: colors.black, fontWeight: 700 }}
+                  onClick={() => setMobileFiltersOpen(true)}
+                >
+                  Filters {filters.categorySlug || filters.brandIds?.length ? `(${ (filters.categorySlug ? 1 : 0) + (filters.brandIds?.length ?? 0) })` : ''}
+                </Button>
 
-              <Stack direction="row" spacing={0.5} sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                <IconButton
+                <Stack direction="row" spacing={0.5} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                  <IconButton
+                    size="small"
+                    onClick={() => setGridCols(3)}
+                    sx={{ color: gridCols === 3 ? colors.red : colors.grey[400], bgcolor: gridCols === 3 ? colors.redGlow : 'transparent', borderRadius: 1.5 }}
+                    title="3 Columns Grid"
+                  >
+                    <Grid3X3 size={18} />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() => setGridCols(4)}
+                    sx={{ color: gridCols === 4 ? colors.red : colors.grey[400], bgcolor: gridCols === 4 ? colors.redGlow : 'transparent', borderRadius: 1.5 }}
+                    title="4 Columns Grid"
+                  >
+                    <LayoutGrid size={18} />
+                  </IconButton>
+                </Stack>
+
+                <Select
                   size="small"
-                  onClick={() => setGridCols(3)}
-                  sx={{ color: gridCols === 3 ? colors.red : colors.grey[400], bgcolor: gridCols === 3 ? colors.redGlow : 'transparent' }}
+                  value={filters.sort}
+                  onChange={(e) => updateFilters({ sort: e.target.value as SortOption })}
+                  sx={{ borderRadius: 2, fontWeight: 700, fontSize: 13, minWidth: 160, bgcolor: colors.grey[50] }}
                 >
-                  <Grid3X3 size={18} />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={() => setGridCols(4)}
-                  sx={{ color: gridCols === 4 ? colors.red : colors.grey[400], bgcolor: gridCols === 4 ? colors.redGlow : 'transparent' }}
-                >
-                  <LayoutGrid size={18} />
-                </IconButton>
+                  <MenuItem value="featured">Featured</MenuItem>
+                  <MenuItem value="newest">Newest Releases</MenuItem>
+                  <MenuItem value="price_asc">Price: Low to High</MenuItem>
+                  <MenuItem value="price_desc">Price: High to Low</MenuItem>
+                  <MenuItem value="rating">Highest Rated</MenuItem>
+                </Select>
               </Stack>
-
-              <Select
-                size="small"
-                value={filters.sort}
-                onChange={(e) => updateFilters({ sort: e.target.value as SortOption })}
-                sx={{ borderRadius: 2.5, fontWeight: 600, fontSize: 13, minWidth: 160 }}
-              >
-                <MenuItem value="featured">Featured</MenuItem>
-                <MenuItem value="newest">Newest Releases</MenuItem>
-                <MenuItem value="price_asc">Price: Low to High</MenuItem>
-                <MenuItem value="price_desc">Price: High to Low</MenuItem>
-                <MenuItem value="rating">Highest Rated</MenuItem>
-              </Select>
             </Stack>
-          </Stack>
+          </Paper>
 
+          {/* Product Items Grid */}
           {!isLoading && data?.items.length === 0 ? (
-            <EmptyState title="No products found" subtitle="Try adjusting your category or price filters to explore more items." />
+            <EmptyState title="No matching gadgets found" subtitle="Try adjusting your category, price range, or brand filters." />
           ) : (
             <Grid container spacing={2.5}>
               {(isLoading ? Array.from({ length: 9 }) : data?.items ?? []).map((p: any, idx: number) => (
@@ -347,6 +455,7 @@ export default function Shop() {
             </Grid>
           )}
 
+          {/* Pagination */}
           {totalPages > 1 && (
             <Stack alignItems="center" sx={{ mt: 6 }}>
               <Pagination
@@ -362,19 +471,19 @@ export default function Shop() {
         </Grid>
       </Grid>
 
+      {/* Mobile Drawer Filter */}
       <Drawer anchor="bottom" open={mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
-        <Box sx={{ p: 3, maxHeight: '80vh', overflowY: 'auto' }}>
+        <Box sx={{ p: 3, maxHeight: '85vh', overflowY: 'auto' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-            <Typography variant="h6" sx={{ fontWeight: 800 }}>Filters</Typography>
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>Filter Products</Typography>
             <IconButton onClick={() => setMobileFiltersOpen(false)}><X size={20} /></IconButton>
           </Stack>
           {filterPanel}
-          <Button fullWidth variant="contained" color="secondary" size="large" sx={{ mt: 3 }} onClick={() => setMobileFiltersOpen(false)}>
-            Apply & Show Results
+          <Button fullWidth variant="contained" color="secondary" size="large" sx={{ mt: 3, borderRadius: 2.5, fontWeight: 800 }} onClick={() => setMobileFiltersOpen(false)}>
+            Show Results ({data?.total ?? 0})
           </Button>
         </Box>
       </Drawer>
     </Container>
   )
 }
-

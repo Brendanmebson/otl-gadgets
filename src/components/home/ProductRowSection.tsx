@@ -14,7 +14,7 @@ interface Props {
 
 export default function ProductRowSection({ title, viewAllHref, products, isLoading }: Props) {
   return (
-    <Container maxWidth="xl" sx={{ py: 5 }}>
+    <Container maxWidth="lg" sx={{ py: 5 }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
         <Typography variant="h5">{title}</Typography>
         {viewAllHref && (

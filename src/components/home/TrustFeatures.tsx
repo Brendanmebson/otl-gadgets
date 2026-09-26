@@ -11,7 +11,7 @@ const FEATURES = [
 
 export default function TrustFeatures() {
   return (
-    <Container maxWidth="xl" sx={{ py: { xs: 4, md: 5 } }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 5 } }}>
       <Grid container spacing={2}>
         {FEATURES.map(({ icon: Icon, title, subtitle }) => (
           <Grid item xs={6} md={3} key={title}>

@@ -44,7 +44,7 @@ export default function Cart() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h3" sx={{ fontWeight: 800, color: colors.black, mb: 3 }}>
         SHOPPING CART ({items.length})
       </Typography>
@@ -84,18 +84,19 @@ export default function Cart() {
                 key={product.id}
                 elevation={0}
                 sx={{
-                  p: 2.5,
+                  p: { xs: 2, sm: 2.5 },
                   border: `1px solid ${colors.grey[200]}`,
                   borderRadius: 2,
                   display: 'flex',
-                  alignItems: 'center',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: { xs: 'flex-start', sm: 'center' },
                   gap: 2,
                 }}
               >
                 <Box
                   component={Link}
                   to={`/product/${product.slug}`}
-                  sx={{ width: 90, height: 90, bgcolor: colors.grey[50], borderRadius: 1.5, flexShrink: 0, overflow: 'hidden' }}
+                  sx={{ width: { xs: 70, sm: 90 }, height: { xs: 70, sm: 90 }, bgcolor: colors.grey[50], borderRadius: 1.5, flexShrink: 0, overflow: 'hidden' }}
                 >
                   <Box component="img" src={product.images?.[0]?.url} alt={product.name} sx={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </Box>
@@ -108,19 +109,32 @@ export default function Cart() {
                   </Typography>
                 </Box>
 
-                <Stack direction="row" alignItems="center" sx={{ border: `1.5px solid ${colors.grey[200]}`, borderRadius: 2, px: 0.5 }}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent={{ xs: 'space-between', sm: 'flex-start' }}
+                  sx={{ border: `1.5px solid ${colors.grey[200]}`, borderRadius: 2, px: 0.5, width: { xs: '100%', sm: 'auto' } }}
+                >
                   <IconButton size="small" onClick={() => setQuantity(product.id, quantity - 1)}><Minus size={14} /></IconButton>
                   <Typography sx={{ px: 1.5, fontWeight: 800 }}>{quantity}</Typography>
                   <IconButton size="small" onClick={() => setQuantity(product.id, quantity + 1)}><Plus size={14} /></IconButton>
                 </Stack>
 
-                <Typography sx={{ width: 110, textAlign: 'right', fontWeight: 800, color: colors.black, fontSize: 16 }}>
+                <Stack
+                  direction={{ xs: 'row', sm: 'row' }}
+                  justifyContent={{ xs: 'space-between', sm: 'flex-start' }}
+                  alignItems="center"
+                  spacing={1}
+                  sx={{ width: { xs: '100%', sm: 'auto' } }}
+                >
+                <Typography sx={{ width: { xs: 'auto', sm: 110 }, textAlign: 'right', fontWeight: 800, color: colors.black, fontSize: 16 }}>
                   {formatNaira(product.price * quantity)}
                 </Typography>
 
                 <IconButton onClick={() => removeFromCart(product.id)} aria-label="Remove item">
                   <Trash2 size={18} color={colors.grey[400]} />
                 </IconButton>
+                </Stack>
               </Paper>
             ))}
           </Stack>

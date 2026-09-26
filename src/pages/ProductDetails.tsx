@@ -32,7 +32,7 @@ export default function ProductDetails() {
 
   if (isLoading) {
     return (
-      <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
         <Grid container spacing={5}>
           <Grid item xs={12} md={6}><Skeleton variant="rectangular" height={480} sx={{ borderRadius: 2 }} /></Grid>
           <Grid item xs={12} md={6}>
@@ -47,7 +47,7 @@ export default function ProductDetails() {
 
   if (!product) {
     return (
-      <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
         <EmptyState title="Product not found" subtitle="This product may have been removed or is no longer available." />
       </Container>
     )
@@ -69,7 +69,7 @@ export default function ProductDetails() {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Breadcrumbs
         items={[
           { label: 'Home', to: '/' },
@@ -95,7 +95,7 @@ export default function ProductDetails() {
             </IconButton>
           </Box>
           {images.length > 1 && (
-            <Stack direction="row" spacing={1.5}>
+            <Stack direction="row" spacing={1} sx={{ overflowX: 'auto', pb: 0.5 }}>
               {images.map((img, idx) => (
                 <Box
                   key={img.id}
@@ -103,8 +103,8 @@ export default function ProductDetails() {
                   src={img.url}
                   onClick={() => setActiveImage(idx)}
                   sx={{
-                    width: 72,
-                    height: 72,
+                    width: { xs: 56, sm: 72 },
+                    height: { xs: 56, sm: 72 },
                     objectFit: 'cover',
                     borderRadius: 2.5,
                     cursor: 'pointer',
@@ -126,7 +126,7 @@ export default function ProductDetails() {
                   {product.brand.name.toUpperCase()}
                 </Typography>
               )}
-              <Typography variant="h3" sx={{ mt: 0.5, fontWeight: 800, color: colors.black, lineHeight: 1.15 }}>
+              <Typography variant="h3" sx={{ mt: 0.5, fontWeight: 800, color: colors.black, lineHeight: 1.15, fontSize: { xs: 24, sm: 32, md: 40 } }}>
                 {product.name}
               </Typography>
             </Box>
@@ -142,12 +142,12 @@ export default function ProductDetails() {
             </Stack>
 
             <Stack direction="row" spacing={2} alignItems="baseline">
-              <Typography variant="h3" sx={{ color: colors.red, fontWeight: 800 }}>
+              <Typography variant="h3" sx={{ color: colors.red, fontWeight: 800, fontSize: { xs: 26, sm: 34, md: 42 } }}>
                 {formatNaira(product.price)}
               </Typography>
               {!!product.compare_at_price && (
                 <>
-                  <Typography variant="h5" sx={{ color: colors.grey[400], textDecoration: 'line-through' }}>
+                  <Typography variant="h5" sx={{ color: colors.grey[400], textDecoration: 'line-through', fontSize: { xs: 16, sm: 20 } }}>
                     {formatNaira(product.compare_at_price)}
                   </Typography>
                   <Chip label={`SAVE ${pct}%`} sx={{ bgcolor: colors.red, color: colors.white, fontWeight: 800, fontSize: 12 }} />
@@ -228,11 +228,14 @@ export default function ProductDetails() {
         onChange={(_, v) => setTab(v)}
         textColor="secondary"
         indicatorColor="secondary"
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
         sx={{ borderBottom: `1px solid ${colors.grey[200]}`, mb: 4 }}
       >
-        <Tab label="Full Description" sx={{ fontWeight: 700, fontSize: 15 }} />
-        <Tab label="Specifications Grid" sx={{ fontWeight: 700, fontSize: 15 }} />
-        <Tab label={`Customer Reviews (${product.rating_count})`} sx={{ fontWeight: 700, fontSize: 15 }} />
+        <Tab label="Description" sx={{ fontWeight: 700, fontSize: { xs: 13, sm: 15 } }} />
+        <Tab label="Specifications" sx={{ fontWeight: 700, fontSize: { xs: 13, sm: 15 } }} />
+        <Tab label={`Reviews (${product.rating_count})`} sx={{ fontWeight: 700, fontSize: { xs: 13, sm: 15 } }} />
       </Tabs>
 
       <Box sx={{ pb: 6 }}>

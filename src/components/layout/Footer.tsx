@@ -38,9 +38,9 @@ const columns = [
 export default function Footer() {
   return (
     <Box sx={{ bgcolor: colors.black, color: colors.white, pt: 8, pb: 4, mt: 10 }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Grid container spacing={5}>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>
               OTL <Box component="span" sx={{ color: colors.red }}>GADGETS</Box>
             </Typography>
@@ -83,7 +83,7 @@ export default function Footer() {
             <Typography variant="body2" sx={{ color: colors.grey[400], mb: 2 }}>
               Subscribe for new arrivals, exclusive offers and gadget deals.
             </Typography>
-            <Stack direction="row" spacing={1}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
               <TextField
                 size="small"
                 placeholder="Enter your email"
@@ -93,7 +93,7 @@ export default function Footer() {
                   '& .MuiOutlinedInput-root': { color: colors.white, '& fieldset': { border: 'none' } },
                 }}
               />
-              <Button variant="contained" color="secondary" sx={{ minWidth: 44, px: 1.5 }}>
+              <Button variant="contained" color="secondary" sx={{ minWidth: { xs: '100%', sm: 44 }, px: 1.5 }}>
                 <Send size={16} />
               </Button>
             </Stack>

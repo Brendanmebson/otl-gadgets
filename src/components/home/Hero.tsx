@@ -15,7 +15,7 @@ export default function Hero() {
         background: `radial-gradient(circle at 80% 20%, rgba(227, 28, 37, 0.04) 0%, transparent 50%), ${colors.bg}`,
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Grid container alignItems="center" spacing={4} sx={{ minHeight: { xs: 'auto', md: 540 } }}>
           <Grid item xs={12} md={6}>
             <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
@@ -96,7 +96,7 @@ export default function Hero() {
             <Box
               sx={{
                 position: 'relative',
-                height: { xs: 320, sm: 400, md: 500 },
+                height: { xs: 280, sm: 360, md: 500 },
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -139,7 +139,7 @@ export default function Hero() {
                   borderRadius: 2,
                   boxShadow: '0 12px 28px rgba(8,8,8,0.12)',
                   border: `1px solid ${colors.grey[200]}`,
-                  display: 'flex',
+                  display: { xs: 'none', sm: 'flex' },
                   alignItems: 'center',
                   gap: 1.5,
                 }}
